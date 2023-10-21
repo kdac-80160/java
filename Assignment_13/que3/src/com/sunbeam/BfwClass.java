@@ -10,7 +10,7 @@ public class BfwClass {
 
 		Scanner sc = new Scanner(System.in);
 		try (FileWriter fw = new FileWriter("file.txt")) {
-			BufferedWriter bfw = new BufferedWriter(fw);
+			try(BufferedWriter bfw = new BufferedWriter(fw)){
 			for (int i = 1; i <= 4; i++) {
 				System.out.print("Enter the string : ");
 				String s = sc.nextLine();
@@ -18,8 +18,9 @@ public class BfwClass {
 				bfw.newLine();
 			}
 			bfw.flush();
+			}
 		} catch (Exception e) {
-
+			//e.printStackTrace();
 		}
 		System.out.println("Strings Added Successfully");
 	}

@@ -23,11 +23,11 @@ public class BookList {
 		Book b;
 		Scanner sc = new Scanner(System.in);
 		List<Book> library = new ArrayList<Book>();
-//		library.add(new Book("Aw1", 1200, "Mahendra", 10));
-//		library.add(new Book("M12", 1200, "Mahendra", 15));
-//		library.add(new Book("M13", 1200, "Mahendra", 19));
-//		library.add(new Book("M14", 1200, "Mahendra", 20));
-//		library.add(new Book("M15", 1200, "Mahendra", 21));
+//		library.add(new Book("M11", 1200, "Nikolus", 10));
+//		library.add(new Book("M12", 4400, "Selena", 15));
+//		library.add(new Book("M13", 5600, "Jack Thomson", 19));
+//		library.add(new Book("M14", 8800, "Paulo Coelho", 20));
+//		library.add(new Book("M15", 9900, "Micheal", 21));
 		do {
 			System.out.println("---------------------------");
 			System.out.println("**Wisdom Library**");
@@ -95,22 +95,23 @@ public class BookList {
 			case 7:
 				try (FileOutputStream fout = new FileOutputStream("Books.txt")) {
 					
-					DataOutputStream dout = new DataOutputStream(fout);
+					try(DataOutputStream dout = new DataOutputStream(fout))
+					{
 					for (Book book : library) {
 						dout.writeUTF(book.getIsbn());
 						dout.writeDouble(book.getPrice());
 						dout.writeUTF(book.getAuthorName());
 						dout.writeInt(book.getQuantity());
 					}
-
+					}
 				} catch (Exception e) {
 					// e.printStackTrace();
 				}
-				System.out.println("All books added successfully");
+				System.out.println("All books saved successfully.");
 				break;
 			case 8:
 				try (FileInputStream fin = new FileInputStream("Books.txt")) {
-					DataInputStream din = new DataInputStream(fin);
+					try(DataInputStream din = new DataInputStream(fin)){
 					while(true)
 					{
 						Book book = new Book();
@@ -119,6 +120,7 @@ public class BookList {
 						book.setAuthorName(din.readUTF());
 						book.setQuantity(din.readInt());
 						library.add(book);
+					}
 					}
 				} catch (Exception e) {
 					// e.printStackTrace();
