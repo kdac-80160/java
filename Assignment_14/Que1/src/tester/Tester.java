@@ -22,7 +22,7 @@ public class Tester {
 			System.out.println("4 : Display All Candidates");
 			System.out.println("5 : Increment Candidate Vote");
 			System.out.println("6 : Get Candidates from a specified party");
-			System.out.println("7 : Get partywise vote count");
+			System.out.println("7 : Get partywise total votes");
 			System.out.print("Enter your choice : ");
 			choice = sc.nextInt();
 			System.out.println("-----------------------------------------");
@@ -105,10 +105,7 @@ public class Tester {
 				break;
 			case 7:
 				try (CandidateDao dao = new CandidateDao()) {
-					sc.nextLine();
-					System.out.print("Enter party : ");
-					party = sc.nextLine();
-					List<PartyVotes> list = dao.partyWiseVotes(party);
+					List<PartyVotes> list = dao.partyWiseVotes();
 					list.forEach(e -> System.out.println(e));
 				} catch (Exception e) {
 					e.printStackTrace();

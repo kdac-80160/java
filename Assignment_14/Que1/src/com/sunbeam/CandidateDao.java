@@ -111,18 +111,17 @@ public class CandidateDao implements AutoCloseable {
 	}
 	
 	// get partywise vote count
-	public List<PartyVotes> partyWiseVotes(String party) throws SQLException
+	public List<PartyVotes> partyWiseVotes() throws SQLException
 	{
 		List<PartyVotes> list = new ArrayList<>();
-		String sql = "SELECT party, votes from candidates WHERE party=?";
+		String sql = "SELECT party, sum(votes) SUM from candidates group by party";
 		try(PreparedStatement stmt = con.prepareStatement(sql))
 		{
-			stmt.setString(1, party);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next())
 			{
 				String partyName = rs.getString("party");
-				int numOfVotes = rs.getInt("votes");
+				int numOfVotes = rs.getInt("SUM");
 				PartyVotes pv = new PartyVotes(partyName, numOfVotes);
 				list.add(pv);
 			}
